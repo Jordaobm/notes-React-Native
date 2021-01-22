@@ -11,7 +11,6 @@ Notes é uma app desenvolvido para Android e IOS usando React-Native com o intui
 - date-fns para formatação de datas
 - react-native-vector-icons (icones auto-explicativos)
 - Styled-Components (ferramenta para uso do css em forma de componentes React)
-- 
 
 ### Demais ferramentas e sites que auxiliaram na construção da UI
 
