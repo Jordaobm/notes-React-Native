@@ -1,5 +1,6 @@
+import {View} from 'react-native';
 import {RectButton} from 'react-native-gesture-handler';
-import styled from 'styled-components/native';
+import styled, {css} from 'styled-components/native';
 
 export const Container = styled(RectButton)`
   width: 100%;
@@ -8,10 +9,24 @@ export const Container = styled(RectButton)`
   flex-direction: row;
 `;
 
-export const Line = styled.View`
+interface LineProps {
+  reminder?: boolean;
+  isAfter?: boolean;
+}
+
+export const Line = styled<LineProps>(View)`
   width: 5px;
   height: 60px;
-  background-color: yellow;
+  background-color: #b468ff;
+
+  ${(props) =>
+    props.isAfter
+      ? css`
+          background-color: #00af5b;
+        `
+      : css`
+          background-color: #f65555;
+        `}
 `;
 
 export const CardInfo = styled.View`
@@ -30,7 +45,7 @@ export const Title = styled.Text`
 export const CardDate = styled.View`
   width: 100%;
 `;
-export const Date = styled.Text`
+export const DateExtens = styled.Text`
   font-family: Mulish-Light;
   font-size: 16px;
 `;

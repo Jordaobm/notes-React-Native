@@ -1,6 +1,6 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
-import INote from '../dtos/INote';
+import {INote} from '../dtos/types';
 
 interface NoteContext {
   notes: INote[];

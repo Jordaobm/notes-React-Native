@@ -1,7 +1,6 @@
-import styled from 'styled-components/native';
-import Icon from 'react-native-vector-icons/Feather';
 import {RectButton} from 'react-native-gesture-handler';
-import {Image} from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
+import styled from 'styled-components/native';
 
 export const Container = styled.View`
   width: 100%;
@@ -34,9 +33,4 @@ export const ContentImg = styled.View`
   width: 100%;
   height: 100%;
   align-items: center;
-`;
-export const Img = styled(Image)`
-  margin: 20% 0;
-  width: 400px;
-  height: 400px;
 `;

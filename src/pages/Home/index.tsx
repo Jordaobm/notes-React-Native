@@ -3,7 +3,8 @@ import {ScrollView} from 'react-native-gesture-handler';
 import Button from '../../components/Button';
 import Card from '../../components/CardNote';
 import Input from '../../components/Input';
-import INote from '../../dtos/INote';
+import Navigation from '../../components/Navigation';
+import {INote} from '../../dtos/types';
 import {useNote} from '../../hooks/note';
 import {Container, Icone, SearchContainer} from './styles';
 
@@ -44,6 +45,8 @@ const Home: React.FC = () => {
               return <Card key={notes.indexOf(note)} note={note} />;
             })}
       </ScrollView>
+
+      <Navigation isHome={true} />
 
       <Button name="plus" diretion="Note" />
     </Container>

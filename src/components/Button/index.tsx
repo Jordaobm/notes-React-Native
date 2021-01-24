@@ -4,14 +4,17 @@ import {useNote} from '../../hooks/note';
 import Note from '../../pages/Note';
 import {ButtonContent, ButtonIcon} from './styles';
 import AsyncStorage from '@react-native-community/async-storage';
-import INote from '../../dtos/INote';
+import {INote, IReminder} from '../../dtos/types';
+import {RectButtonProperties} from 'react-native-gesture-handler';
+import {useReminder} from '../../hooks/reminder';
 
-interface ButtonProps {
+interface ButtonProps extends RectButtonProperties {
   name?: string;
   diretion?: string;
   position?: number;
   color?: string;
   deleteNote?: INote;
+  deleteReminder?: IReminder;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -20,10 +23,12 @@ const Button: React.FC<ButtonProps> = ({
   position,
   color,
   deleteNote,
+  deleteReminder,
 }) => {
   const navigation = useNavigation();
 
   const {notes, setNotes, setNoteDetail} = useNote();
+  const {reminders, setReminders, setReminderDetail} = useReminder();
 
   const handleDeleteNote = useCallback(
     async (deletingNote: INote) => {
@@ -39,6 +44,23 @@ const Button: React.FC<ButtonProps> = ({
       });
     },
     [notes, navigation, setNotes, setNoteDetail],
+  );
+
+  const handleDeleteReminder = useCallback(
+    async (deletingReminder: IReminder) => {
+      navigation.navigate('Reminders');
+      const filter = reminders.filter(
+        (reminder) => reminder.reminderId !== deletingReminder.reminderId,
+      );
+      setReminders(filter);
+
+      await AsyncStorage.setItem(
+        '@RememberMe:reminders',
+        JSON.stringify(filter),
+      );
+      setReminderDetail({} as IReminder);
+    },
+    [navigation, reminders, setReminders, setReminderDetail],
   );
 
   if (diretion) {
@@ -58,6 +80,17 @@ const Button: React.FC<ButtonProps> = ({
         position={position}
         color={color}
         onPress={() => handleDeleteNote(deleteNote)}>
+        <ButtonIcon name={name} size={25} color="#fff" />
+      </ButtonContent>
+    );
+  }
+
+  if (deleteReminder) {
+    return (
+      <ButtonContent
+        position={position}
+        color={color}
+        onPress={() => handleDeleteReminder(deleteReminder)}>
         <ButtonIcon name={name} size={25} color="#fff" />
       </ButtonContent>
     );

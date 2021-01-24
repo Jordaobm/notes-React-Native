@@ -21,7 +21,7 @@ import {format} from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import INote from '../../dtos/INote';
+import {INote} from '../../dtos/types';
 
 const NoteEdit: React.FC = () => {
   const navigation = useNavigation();

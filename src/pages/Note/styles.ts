@@ -35,7 +35,7 @@ interface LineProps {
 export const Line = styled.View`
   width: 100%;
   height: 5px;
-  background-color: green;
+  background-color: #b468ff;
 
   ${(props) =>
     props.errInput &&
@@ -47,7 +47,7 @@ export const Line = styled.View`
 export const SaveNote = styled(RectButton)`
   width: 100px;
   height: 50px;
-  background-color: green;
+  background-color: #b468ff;
   border-radius: 5px;
   justify-content: center;
   align-items: center;
