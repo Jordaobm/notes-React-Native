@@ -18,12 +18,7 @@ import {
 } from './styles';
 
 const NoteDetail: React.FC = () => {
-  const navigation = useNavigation();
   const {noteDetail} = useNote();
-
-  if (noteDetail.title === '') {
-    navigation.navigate('Home');
-  }
 
   return (
     <Container>

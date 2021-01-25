@@ -23,9 +23,9 @@ const ReminderDetail: React.FC = () => {
   const navigation = useNavigation();
   const {reminderDetail} = useReminder();
 
-  // if (!reminderDetail.reminderId) {
-  //   navigation.navigate('Reminders');
-  // }
+  if (!reminderDetail) {
+    navigation.navigate('Reminders');
+  }
 
   return (
     <Container>

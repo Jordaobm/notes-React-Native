@@ -20,13 +20,16 @@ export const Line = styled<LineProps>(View)`
   background-color: #b468ff;
 
   ${(props) =>
-    props.isAfter
-      ? css`
-          background-color: #00af5b;
-        `
-      : css`
-          background-color: #f65555;
-        `}
+    props.isAfter &&
+    css`
+      background-color: #00af5b;
+    `}
+
+  ${(props) =>
+    props.isAfter === false &&
+    css`
+      background-color: #f65555;
+    `}
 `;
 
 export const CardInfo = styled.View`
