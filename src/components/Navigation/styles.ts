@@ -5,7 +5,7 @@ import {Text, View} from 'react-native';
 
 export const BottomNavigation = styled.View`
   width: 100%;
-  height: 12%;
+  height: 14%;
 `;
 
 export const HomeNotes = styled(RectButton)`
@@ -31,7 +31,6 @@ export const Buttons = styled.View`
 export const Line = styled.View`
   width: 100%;
   height: 1px;
-  background-color: #b468ff;
 `;
 
 interface IconeProps {
