@@ -33,8 +33,13 @@ import {
 import {ScrollView} from 'react-native-gesture-handler';
 import Input from '../../components/Input';
 import {format} from 'date-fns';
+import {useNotification} from '../../hooks/notification';
 
 const ReminderEdit: React.FC = () => {
+  const {
+    addNotificationSchedule,
+    cancelNotificationSchedule,
+  } = useNotification();
   const [visible, setVisible] = React.useState(false);
 
   const showModal = () => setVisible(true);
@@ -109,8 +114,6 @@ const ReminderEdit: React.FC = () => {
         (reminder) => reminder.reminderId === reminderDetail.reminderId,
       );
 
-      console.log(selectedDate, selectedTime);
-
       if (selectedDate === '' || selectedTime === '') {
         const editReminder: IReminder = {
           reminderId: reminderDetail.reminderId,
@@ -118,7 +121,6 @@ const ReminderEdit: React.FC = () => {
           reminderBody: data.reminderBody,
           reminderDate: reminderDetail.reminderDate,
         };
-
         reminders.splice(findReminder, 1);
         setReminders([...reminders, editReminder]);
         navigation.navigate('Reminders');
@@ -133,6 +135,15 @@ const ReminderEdit: React.FC = () => {
         reminderDate: `${selectedDate} ${selectedTime}`,
       };
 
+      cancelNotificationSchedule(reminderDetail.reminderId);
+      addNotificationSchedule(
+        reminderDetail.reminderId,
+        data.reminderTitle,
+        data.reminderBody,
+        selectedDate,
+        selectedTime,
+      );
+
       reminders.splice(findReminder, 1);
       setReminders([...reminders, editReminder]);
       navigation.navigate('Reminders');
@@ -144,6 +155,9 @@ const ReminderEdit: React.FC = () => {
       setReminders,
       selectedDate,
       selectedTime,
+      cancelNotificationSchedule,
+      addNotificationSchedule,
+      ,
     ],
   );
 

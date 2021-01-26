@@ -2,17 +2,26 @@
 
 buildscript {
     ext {
-        buildToolsVersion = "29.0.2"
-        minSdkVersion = 16
+        googlePlayServicesVersion = "+" // default: "+"
+        firebaseMessagingVersion = "+" // default: "+"
+
         compileSdkVersion = 29
+        buildToolsVersion = "29.0.2"
         targetSdkVersion = 29
+        supportLibVersion = "23.1.1" // default: 
+        minSdkVersion = 16
+        
+        
     }
     repositories {
         google()
         jcenter()
     }
     dependencies {
+        
         classpath("com.android.tools.build:gradle:3.5.3")
+        classpath('com.google.gms:google-services:4.3.3')
+        classpath 'com.google.gms:google-services:4.3.4'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

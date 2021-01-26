@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {INote, IReminder} from '../../dtos/types';
 import {RectButtonProperties} from 'react-native-gesture-handler';
 import {useReminder} from '../../hooks/reminder';
+import {useNotification} from '../../hooks/notification';
 
 interface ButtonProps extends RectButtonProperties {
   name?: string;
@@ -25,6 +26,7 @@ const Button: React.FC<ButtonProps> = ({
   deleteNote,
   deleteReminder,
 }) => {
+  const {cancelNotificationSchedule} = useNotification();
   const navigation = useNavigation();
 
   const {notes, setNotes, setNoteDetail} = useNote();
@@ -48,6 +50,7 @@ const Button: React.FC<ButtonProps> = ({
 
   const handleDeleteReminder = useCallback(
     async (deletingReminder: IReminder) => {
+      cancelNotificationSchedule(deletingReminder.reminderId);
       navigation.navigate('Reminders');
       const filter = reminders.filter(
         (reminder) => reminder.reminderId !== deletingReminder.reminderId,
@@ -60,7 +63,13 @@ const Button: React.FC<ButtonProps> = ({
       );
       setReminderDetail({} as IReminder);
     },
-    [navigation, reminders, setReminders, setReminderDetail],
+    [
+      navigation,
+      reminders,
+      setReminders,
+      setReminderDetail,
+      cancelNotificationSchedule,
+    ],
   );
 
   if (diretion) {

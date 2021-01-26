@@ -37,9 +37,12 @@ import {useReminder} from '../../hooks/reminder';
 import {Modal} from 'react-native-paper';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {format} from 'date-fns';
+import {useNotification} from '../../hooks/notification';
 
 const NewReminder: React.FC = () => {
   const [visible, setVisible] = React.useState(false);
+
+  const {addNotificationSchedule} = useNotification();
 
   const showModal = () => setVisible(true);
 
@@ -112,11 +115,26 @@ const NewReminder: React.FC = () => {
         reminderBody: data.reminderBody,
         reminderDate: `${selectedDate} ${selectedTime}`,
       });
+
+      addNotificationSchedule(
+        id,
+        data.reminderTitle,
+        data.reminderBody,
+        selectedDate,
+        selectedTime,
+      );
+
       navigation.navigate('Reminders');
       formRef.current.clearField('reminderTitle');
       formRef.current.clearField('reminderBody');
     },
-    [addReminder, navigation, selectedDate, selectedTime],
+    [
+      addReminder,
+      navigation,
+      selectedDate,
+      selectedTime,
+      addNotificationSchedule,
+    ],
   );
 
   useEffect(() => {
