@@ -114,6 +114,8 @@ const ReminderEdit: React.FC = () => {
         (reminder) => reminder.reminderId === reminderDetail.reminderId,
       );
 
+      cancelNotificationSchedule(reminderDetail.reminderId);
+
       if (selectedDate === '' || selectedTime === '') {
         const editReminder: IReminder = {
           reminderId: reminderDetail.reminderId,
@@ -124,7 +126,13 @@ const ReminderEdit: React.FC = () => {
         reminders.splice(findReminder, 1);
         setReminders([...reminders, editReminder]);
         navigation.navigate('Reminders');
-
+        addNotificationSchedule(
+          reminderDetail.reminderId,
+          data.reminderTitle,
+          data.reminderBody,
+          selectedDate,
+          selectedTime,
+        );
         return;
       }
 
@@ -135,11 +143,10 @@ const ReminderEdit: React.FC = () => {
         reminderDate: `${selectedDate} ${selectedTime}`,
       };
 
-      cancelNotificationSchedule(reminderDetail.reminderId);
       addNotificationSchedule(
-        reminderDetail.reminderId,
-        data.reminderTitle,
-        data.reminderBody,
+        editReminder.reminderId,
+        editReminder.reminderTitle,
+        editReminder.reminderBody,
         selectedDate,
         selectedTime,
       );
@@ -157,7 +164,6 @@ const ReminderEdit: React.FC = () => {
       selectedTime,
       cancelNotificationSchedule,
       addNotificationSchedule,
-      ,
     ],
   );
 

@@ -100,6 +100,7 @@ const NotificationProvider: React.FC = ({children}) => {
 
   const cancelNotificationSchedule = useCallback(
     (reminderId: number) => {
+      console.log('cancelou');
       const findNotification = notification.find(
         (notif) => notif.reminderId === reminderId,
       );
