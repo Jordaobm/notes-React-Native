@@ -108,5 +108,5 @@ E então o modal será fechado e você retornará à página de criação de seu
 Por fim, quando chegar o momento, seu lembrete soará uma notificação em seu dispositivo, alertando-o. 
 
 <h1 align="center">
-  <img alt="notificacao" width="300px" src="https://github.com/Jordaobm/notes-React-Native/blob/main/assets/documentation/Notifica%C3%A7%C3%A3o.jpg" />
+  <img alt="notificacao" src="https://github.com/Jordaobm/notes-React-Native/blob/main/assets/documentation/Notifica%C3%A7%C3%A3o.jpg" />
 </h1>
