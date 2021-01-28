@@ -33,14 +33,12 @@ import {
 import {ScrollView} from 'react-native-gesture-handler';
 import Input from '../../components/Input';
 import {format} from 'date-fns';
-import {useNotification} from '../../hooks/notification';
+import {useNotifications} from '../../hooks/notification';
 
 const ReminderEdit: React.FC = () => {
-  const {
-    addNotificationSchedule,
-    cancelNotificationSchedule,
-  } = useNotification();
   const [visible, setVisible] = React.useState(false);
+
+  const {edditNotification} = useNotifications();
 
   const showModal = () => setVisible(true);
 
@@ -104,7 +102,7 @@ const ReminderEdit: React.FC = () => {
 
   const handleSubmit = useCallback(
     async (data: IReminder) => {
-      if (data.reminderTitle === '') {
+      if (data.reminderTitle === '' || data.reminderBody === '') {
         setErrInput(true);
         Alert.alert('Erro', 'Preencha os dados do lembrete');
         return;
@@ -114,28 +112,6 @@ const ReminderEdit: React.FC = () => {
         (reminder) => reminder.reminderId === reminderDetail.reminderId,
       );
 
-      cancelNotificationSchedule(reminderDetail.reminderId);
-
-      if (selectedDate === '' || selectedTime === '') {
-        const editReminder: IReminder = {
-          reminderId: reminderDetail.reminderId,
-          reminderTitle: data.reminderTitle,
-          reminderBody: data.reminderBody,
-          reminderDate: reminderDetail.reminderDate,
-        };
-        reminders.splice(findReminder, 1);
-        setReminders([...reminders, editReminder]);
-        navigation.navigate('Reminders');
-        addNotificationSchedule(
-          reminderDetail.reminderId,
-          data.reminderTitle,
-          data.reminderBody,
-          selectedDate,
-          selectedTime,
-        );
-        return;
-      }
-
       const editReminder: IReminder = {
         reminderId: reminderDetail.reminderId,
         reminderTitle: data.reminderTitle,
@@ -143,17 +119,15 @@ const ReminderEdit: React.FC = () => {
         reminderDate: `${selectedDate} ${selectedTime}`,
       };
 
-      addNotificationSchedule(
-        editReminder.reminderId,
-        editReminder.reminderTitle,
-        editReminder.reminderBody,
-        selectedDate,
-        selectedTime,
-      );
-
       reminders.splice(findReminder, 1);
       setReminders([...reminders, editReminder]);
       navigation.navigate('Reminders');
+      edditNotification({
+        title: data.reminderTitle,
+        message: data.reminderBody,
+        reminderDate: `${selectedDate} ${selectedTime}`,
+        reminderId: reminderDetail.reminderId,
+      });
     },
     [
       navigation,
@@ -162,8 +136,7 @@ const ReminderEdit: React.FC = () => {
       setReminders,
       selectedDate,
       selectedTime,
-      cancelNotificationSchedule,
-      addNotificationSchedule,
+      edditNotification,
     ],
   );
 

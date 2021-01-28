@@ -37,12 +37,11 @@ import {useReminder} from '../../hooks/reminder';
 import {Modal} from 'react-native-paper';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {format} from 'date-fns';
-import {useNotification} from '../../hooks/notification';
+import {useNotifications} from '../../hooks/notification';
 
 const NewReminder: React.FC = () => {
+  const {createNotification} = useNotifications();
   const [visible, setVisible] = React.useState(false);
-
-  const {addNotificationSchedule} = useNotification();
 
   const showModal = () => setVisible(true);
 
@@ -115,26 +114,17 @@ const NewReminder: React.FC = () => {
         reminderBody: data.reminderBody,
         reminderDate: `${selectedDate} ${selectedTime}`,
       });
-
-      addNotificationSchedule(
-        id,
-        data.reminderTitle,
-        data.reminderBody,
-        selectedDate,
-        selectedTime,
-      );
-
+      createNotification({
+        message: data.reminderTitle,
+        title: data.reminderBody,
+        reminderDate: `${selectedDate} ${selectedTime}`,
+        reminderId: id,
+      });
       navigation.navigate('Reminders');
       formRef.current.clearField('reminderTitle');
       formRef.current.clearField('reminderBody');
     },
-    [
-      addReminder,
-      navigation,
-      selectedDate,
-      selectedTime,
-      addNotificationSchedule,
-    ],
+    [addReminder, navigation, selectedDate, selectedTime, createNotification],
   );
 
   useEffect(() => {
@@ -150,52 +140,50 @@ const NewReminder: React.FC = () => {
   return (
     <Container>
       <Content>
-        <ScrollView>
-          <CardNewReminder>
-            <Line setErrInput={errInput} />
-            <Form ref={formRef} onSubmit={handleSubmitReminder}>
-              <NoteTitle>
-                <Input
-                  onFocus={() => setErrInput(false)}
-                  inputForm={true}
-                  name="reminderTitle"
-                  placeholder="Título do lembrete"
-                />
-              </NoteTitle>
-              <NoteBody>
-                <Input
-                  onFocus={() => setErrInput(false)}
-                  inputForm={true}
-                  name="reminderBody"
-                  placeholder="Algo para lembrar"
-                  multiline={true}
-                  numberOfLines={10}
-                  style={{flex: 1, textAlignVertical: 'top'}}
-                />
-              </NoteBody>
-              {selectedDate !== '' && selectedTime !== '' && (
-                <DateAndTimeSelected>
-                  {selectedDate} às {selectedTime}
-                </DateAndTimeSelected>
-              )}
-              <NoteActions>
-                <Picker onPress={showModal}>
-                  <Icon name="clock" size={25} color="#fff" />
-                </Picker>
-                <SaveNote
-                  onPress={() => {
-                    formRef.current?.submitForm();
-                  }}>
-                  <Icon name="save" size={25} color="#fff" />
-                </SaveNote>
+        <CardNewReminder>
+          <Line setErrInput={errInput} />
+          <Form ref={formRef} onSubmit={handleSubmitReminder}>
+            <NoteTitle>
+              <Input
+                onFocus={() => setErrInput(false)}
+                inputForm={true}
+                name="reminderTitle"
+                placeholder="Título do lembrete"
+              />
+            </NoteTitle>
+            <NoteBody>
+              <Input
+                onFocus={() => setErrInput(false)}
+                inputForm={true}
+                name="reminderBody"
+                placeholder="Algo para lembrar"
+                multiline={true}
+                numberOfLines={10}
+                style={{flex: 1, textAlignVertical: 'top'}}
+              />
+            </NoteBody>
+            {selectedDate !== '' && selectedTime !== '' && (
+              <DateAndTimeSelected>
+                {selectedDate} às {selectedTime}
+              </DateAndTimeSelected>
+            )}
+            <NoteActions>
+              <Picker onPress={showModal}>
+                <Icon name="clock" size={25} color="#fff" />
+              </Picker>
+              <SaveNote
+                onPress={() => {
+                  formRef.current?.submitForm();
+                }}>
+                <Icon name="save" size={25} color="#fff" />
+              </SaveNote>
 
-                <CancelNote onPress={() => navigation.navigate('Reminders')}>
-                  <Icon name="x" size={25} color="#fff" />
-                </CancelNote>
-              </NoteActions>
-            </Form>
-          </CardNewReminder>
-        </ScrollView>
+              <CancelNote onPress={() => navigation.navigate('Reminders')}>
+                <Icon name="x" size={25} color="#fff" />
+              </CancelNote>
+            </NoteActions>
+          </Form>
+        </CardNewReminder>
       </Content>
       <Modal
         visible={visible}
@@ -227,11 +215,10 @@ const NewReminder: React.FC = () => {
             )}
           </SelectHour>
         </ModalBody>
-        {selectedDate !== '' && selectedTime !== '' && (
-          <DateAndTimeSelected>
-            {selectedDate} às {selectedTime}
-          </DateAndTimeSelected>
-        )}
+        <DateAndTimeSelected>
+          {selectedDate ? selectedDate : 'Selecione a data'} <Text>às </Text>
+          {selectedTime ? selectedTime : 'Selecione a hora'}
+        </DateAndTimeSelected>
         <SaveDateTimeModal onPress={hideModal}>
           <Icon name="save" size={30} color="#fff" />
         </SaveDateTimeModal>

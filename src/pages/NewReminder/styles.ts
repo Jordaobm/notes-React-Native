@@ -16,7 +16,8 @@ export const Content = styled.View`
 
 export const CardNewReminder = styled.View`
   width: 100%;
-  height: 510px;
+  height: 100%;
+  min-height: 600px;
 `;
 
 interface LineProps {

@@ -5,149 +5,158 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import AsyncStorage from '@react-native-community/async-storage';
 import NotifService from '../services/NotifService';
 import {transformDateAndTime} from '../utils/transformDateAndTime';
+import AsyncStorage from '@react-native-community/async-storage';
+import {not} from 'react-native-reanimated';
 
 interface Notification {
-  id: number;
+  id?: number;
+  title: string;
+  message: string;
   reminderId: number;
+  reminderDate: string;
 }
 
 interface NotificationContextData {
-  notification: Notification[];
-  addNotificationSchedule(
-    reminderId: number,
-    title: string,
-    message: string,
-    selectedDate: string,
-    selectedTime: string,
-  ): void;
-
-  cancelNotificationSchedule(reminderId: number): void;
+  createNotification(data: Notification): void;
+  deleteNotification(reminderId: number): void;
+  edditNotification(data: Notification): void;
 }
+
+const notifService = new NotifService();
 
 const NotificationContext = createContext<NotificationContextData>(
   {} as NotificationContextData,
 );
 
 const NotificationProvider: React.FC = ({children}) => {
-  const notifications = new NotifService();
-
-  const [notification, setNotification] = useState<Notification[]>([]);
-  const [lastId, setLastId] = useState(0);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [notificationId, setNotificationID] = useState(0);
 
   useEffect(() => {
-    async function getStorageNotification() {
-      const StorageNotification = await AsyncStorage.getItem(
-        '@RememberMe:notification',
-      );
-      if (StorageNotification) {
-        const parseNotification = JSON.parse(StorageNotification);
-        setNotification(parseNotification);
+    async function loadNotifications() {
+      const localNotif = await AsyncStorage.getItem('@notes:notifications');
+      if (localNotif) {
+        setNotifications(JSON.parse(localNotif));
       }
     }
-    getStorageNotification();
+    loadNotifications();
   }, []);
 
   useEffect(() => {
-    async function getStorageNotification() {
-      const StorageNotification = await AsyncStorage.getItem(
-        '@RememberMe:lastId',
-      );
-      if (StorageNotification) {
-        const parseNotification = JSON.parse(StorageNotification);
-        setLastId(parseNotification);
+    async function loadNotificationsIds() {
+      const localNotif = await AsyncStorage.getItem('@notes:ids');
+      if (localNotif) {
+        setNotificationID(JSON.parse(localNotif));
       }
     }
-    getStorageNotification();
+    loadNotificationsIds();
   }, []);
 
   // useEffect(() => {
-  //   async function getStorageNotification() {
-  //     await AsyncStorage.removeItem('@RememberMe:notification');
+  //   async function loadNotifications() {
+  //     await AsyncStorage.removeItem('@notes:notifications');
   //   }
-  //   getStorageNotification();
+  //   loadNotifications();
   // }, []);
 
   // useEffect(() => {
-  //   async function getStorageNotification() {
-  //     await AsyncStorage.removeItem('@RememberMe:notification');
+  //   async function loadNotificationsIds() {
+  //     await AsyncStorage.removeItem('@notes:ids');
   //   }
-  //   getStorageNotification();
+  //   loadNotificationsIds();
   // }, []);
 
-  const addNotificationSchedule = useCallback(
-    (
-      reminderId: number,
-      title: string,
-      message: string,
-      selectedDate: string,
-      selectedTime: string,
-    ) => {
-      const id = lastId + 1;
-      const parsedDate = transformDateAndTime(selectedDate, selectedTime);
-      notifications.scheduleNotif(id, title, message, parsedDate);
-      const newNot: Notification = {
-        id: id,
-        reminderId: reminderId,
-      };
-      setNotification([...notification, newNot]);
-      setLastId(id);
-    },
-    [notifications, lastId, notification],
-  );
-
-  const cancelNotificationSchedule = useCallback(
+  const deleteNotification = useCallback(
     (reminderId: number) => {
-      console.log('cancelou');
-      const findNotification = notification.find(
-        (notif) => notif.reminderId === reminderId,
-      );
-      if (findNotification) {
-        notifications.cancelNotif(findNotification.id);
-        const edditNotifications = notification.filter(
-          (notif) => notif.id !== findNotification.id,
-        );
+      const find = notifications.find((notf) => notf.reminderId === reminderId);
 
-        setNotification(edditNotifications);
+      if (find) {
+        const exclude = notifications.filter((notf) => notf.id !== find.id);
+        setNotifications(exclude);
       }
     },
-    [notifications, notification],
+    [notifications],
+  );
+
+  const createNotification = useCallback(
+    (data: Notification) => {
+      const id = notificationId + 1;
+      const parsedDate = transformDateAndTime(data.reminderDate);
+      notifService.scheduleNotif(id, data.title, data.message, parsedDate);
+      const newNot: Notification = {
+        id,
+        title: data.title,
+        message: data.message,
+        reminderDate: data.reminderDate,
+        reminderId: data.reminderId,
+      };
+      setNotifications([...notifications, newNot]);
+      setNotificationID(id);
+    },
+    [notificationId, notifications],
+  );
+
+  const edditNotification = useCallback(
+    (data: Notification) => {
+      const find = notifications.find(
+        (notf) => notf.reminderId === data.reminderId,
+      );
+      if (find) {
+        notifService.cancelNotif(find.id);
+        const findIndex = notifications.findIndex(
+          (notf) => notf.reminderId === data.reminderId,
+        );
+        if (findIndex >= 0) {
+          const id = notificationId + 1;
+          notifications[findIndex] = {
+            title: data.title,
+            message: data.message,
+            reminderDate: data.reminderDate,
+            reminderId: data.reminderId,
+            id,
+          };
+        }
+        const parsedDate = transformDateAndTime(data.reminderDate);
+        const id = notificationId + 1;
+        notifService.scheduleNotif(id, data.title, data.message, parsedDate);
+        setNotificationID(id);
+      }
+    },
+    [notifications, notificationId],
   );
 
   useEffect(() => {
-    async function setStorageReminders() {
+    async function setNotifications() {
       await AsyncStorage.setItem(
-        '@RememberMe:notification',
-        JSON.stringify(notification),
+        '@notes:notifications',
+        JSON.stringify(notifications),
       );
     }
-    setStorageReminders();
-  }, [notification]);
+    setNotifications();
+  }, [notifications]);
 
   useEffect(() => {
-    async function setStorageReminders() {
-      await AsyncStorage.setItem('@RememberMe:lastId', JSON.stringify(lastId));
+    async function setnotificationId() {
+      await AsyncStorage.setItem('@notes:ids', JSON.stringify(notificationId));
     }
-    setStorageReminders();
-  }, [lastId]);
+    setnotificationId();
+  }, [notificationId]);
+
+  console.log(notifications);
 
   return (
     <NotificationContext.Provider
-      value={{
-        notification,
-        addNotificationSchedule,
-        cancelNotificationSchedule,
-      }}>
+      value={{createNotification, deleteNotification, edditNotification}}>
       {children}
     </NotificationContext.Provider>
   );
 };
 
-function useNotification(): NotificationContextData {
+function useNotifications(): NotificationContextData {
   const context = useContext(NotificationContext);
   return context;
 }
 
-export {useNotification, NotificationProvider};
+export {NotificationProvider, useNotifications};

@@ -2,14 +2,14 @@ import PushNotification from 'react-native-push-notification';
 import NotificationHandler from './NotificationHandler';
 
 export default class NotifService {
-  constructor(onRegister, onNotification) {
+  constructor() {
     this.lastId = 0;
     this.lastChannelCounter = 0;
 
     this.createDefaultChannels();
 
-    NotificationHandler.attachRegister(onRegister);
-    NotificationHandler.attachNotification(onNotification);
+    // NotificationHandler.attachRegister(onRegister);
+    // NotificationHandler.attachNotification(onNotification);
 
     // Clear badge number at start
     PushNotification.getApplicationIconBadgeNumber(function (number) {
@@ -18,9 +18,7 @@ export default class NotifService {
       }
     });
 
-    PushNotification.getChannels(function (channels) {
-      console.log(channels);
-    });
+    PushNotification.getChannels(function (channels) {});
   }
 
   createDefaultChannels() {
@@ -33,8 +31,7 @@ export default class NotifService {
         importance: 4, // (optional) default: 4. Int value of the Android notification importance
         vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
       },
-      (created) =>
-        console.log(`createChannel 'default-channel-id' returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
+      (created) => console.log(), // (optional) callback returns whether the channel was created, false means it already existed.
     );
     PushNotification.createChannel(
       {
@@ -45,8 +42,7 @@ export default class NotifService {
         importance: 4, // (optional) default: 4. Int value of the Android notification importance
         vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
       },
-      (created) =>
-        console.log(`createChannel 'sound-channel-id' returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
+      (created) => console.log(), // (optional) callback returns whether the channel was created, false means it already existed.
     );
   }
 
@@ -61,14 +57,12 @@ export default class NotifService {
         importance: 4, // (optional) default: 4. Int value of the Android notification importance
         vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
       },
-      (created) => console.log(`createChannel returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
+      (created) => console.log(), // (optional) callback returns whether the channel was created, false means it already existed.
     );
   }
 
   popInitialNotification() {
-    PushNotification.popInitialNotification((notification) =>
-      console.log('InitialNotication:', notification),
-    );
+    PushNotification.popInitialNotification((notification) => console.log());
   }
 
   localNotif(soundName) {
@@ -124,7 +118,7 @@ export default class NotifService {
       // subText: 'This is a subText', // (optional) default: none
       color: '#B468FF', // (optional) default: system default
       vibrate: true, // (optional) default: true
-      vibration: 300, // vibration length in milliseconds, ignored if vibrate=false, default: 1000
+      vibration: 1000, // vibration length in milliseconds, ignored if vibrate=false, default: 1000
       tag: 'some_tag', // (optional) add tag to message
       group: 'group', // (optional) add group to message
       groupSummary: false, // (optional) set this notification to be the group summary for a group of notifications, default: false
