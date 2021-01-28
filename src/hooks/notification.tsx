@@ -106,18 +106,6 @@ const NotificationProvider: React.FC = ({children}) => {
       );
       if (find) {
         notifService.cancelNotif(find.id);
-        const findIndex = notifications.findIndex(
-          (notf) => notf.reminderId === data.reminderId,
-        );
-        if (findIndex >= 0) {
-          notifications[findIndex] = {
-            title: data.title,
-            message: data.message,
-            reminderDate: data.reminderDate,
-            reminderId: data.reminderId,
-            id: find.id,
-          };
-        }
         const parsedDate = transformDateAndTime(data.reminderDate);
         notifService.scheduleNotif(
           find.id,
@@ -125,6 +113,19 @@ const NotificationProvider: React.FC = ({children}) => {
           data.message,
           parsedDate,
         );
+        const findIndex = notifications.findIndex(
+          (notf) => notf.id === find.id,
+        );
+        const edit: Notification = {
+          id: find.id,
+          message: data.message,
+          reminderDate: data.reminderDate,
+          reminderId: data.reminderId,
+          title: data.title,
+        };
+        notifications.splice(findIndex, 1);
+
+        setNotifications([...notifications, edit]);
       }
     },
     [notifications],

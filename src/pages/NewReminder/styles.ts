@@ -138,7 +138,6 @@ export const CloseModal = styled(RectButton)`
 `;
 
 export const SaveDateTimeModal = styled(RectButton)`
-  margin-top: 20px;
   background-color: #00af5b;
   width: 70px;
   height: 50px;

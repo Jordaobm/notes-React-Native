@@ -1,4 +1,5 @@
 import PushNotification from 'react-native-push-notification';
+import {formatDateForNotifications} from '../utils/formatDate';
 import NotificationHandler from './NotificationHandler';
 
 export default class NotifService {
@@ -114,8 +115,8 @@ export default class NotifService {
       autoCancel: true, // (optional) default: true
       largeIcon: 'ic_launcher', // (optional) default: "ic_launcher"
       smallIcon: 'ic_notification', // (optional) default: "ic_notification" with fallback for "ic_launcher"
-      // bigText: 'My big text that will be shown when notification is expanded', // (optional) default: "message" prop
-      // subText: 'This is a subText', // (optional) default: none
+      // bigText: formatDateForNotifications(parsedDate), // (optional) default: "message" prop
+      subText: formatDateForNotifications(parsedDate), // (optional) default: none
       color: '#B468FF', // (optional) default: system default
       vibrate: true, // (optional) default: true
       vibration: 1000, // vibration length in milliseconds, ignored if vibrate=false, default: 1000
@@ -140,7 +141,7 @@ export default class NotifService {
       userInfo: {sceen: 'home'}, // (optional) default: {} (using null throws a JSON value '<null>' error)
       // playSound: !!soundName, // (optional) default: true
       soundName: 'default', // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
-      number: 10, // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero)
+      // number: 10, // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero)
     });
   }
 

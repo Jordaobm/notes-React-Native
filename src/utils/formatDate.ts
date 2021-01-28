@@ -1,4 +1,5 @@
-import {isAfter} from 'date-fns';
+import {format, isAfter} from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
 
 export function formatDate(date: string): boolean {
   if (date) {
@@ -22,4 +23,9 @@ export function formatDate(date: string): boolean {
     return compare;
   }
   return false;
+}
+
+export function formatDateForNotifications(date: Date): string {
+  const formt = format(date, "d 'de' MMMM 'de' Y H':'m", {locale: ptBR});
+  return formt;
 }

@@ -92,7 +92,7 @@ const NewReminder: React.FC = () => {
 
   const handleSubmitReminder = useCallback(
     async (data: IReminder) => {
-      if (data.reminderTitle === '') {
+      if (data.reminderTitle === '' || data.reminderBody === '') {
         setErrInput(true);
         Alert.alert(
           'Erro',
@@ -161,12 +161,17 @@ const NewReminder: React.FC = () => {
                 numberOfLines={10}
                 style={{flex: 1, textAlignVertical: 'top'}}
               />
+              {selectedDate !== '' && selectedTime !== '' ? (
+                <DateAndTimeSelected>
+                  {selectedDate ? selectedDate : 'Selecione a data'}{' '}
+                  <Text>às </Text>
+                  {selectedTime ? selectedTime : 'selecione a hora'}
+                </DateAndTimeSelected>
+              ) : (
+                <View />
+              )}
             </NoteBody>
-            {selectedDate !== '' && selectedTime !== '' && (
-              <DateAndTimeSelected>
-                {selectedDate} às {selectedTime}
-              </DateAndTimeSelected>
-            )}
+
             <NoteActions>
               <Picker onPress={showModal}>
                 <Icon name="clock" size={25} color="#fff" />
@@ -217,7 +222,7 @@ const NewReminder: React.FC = () => {
         </ModalBody>
         <DateAndTimeSelected>
           {selectedDate ? selectedDate : 'Selecione a data'} <Text>às </Text>
-          {selectedTime ? selectedTime : 'Selecione a hora'}
+          {selectedTime ? selectedTime : 'selecione a hora'}
         </DateAndTimeSelected>
         <SaveDateTimeModal onPress={hideModal}>
           <Icon name="save" size={30} color="#fff" />
