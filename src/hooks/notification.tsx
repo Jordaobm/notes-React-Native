@@ -73,6 +73,7 @@ const NotificationProvider: React.FC = ({children}) => {
       const find = notifications.find((notf) => notf.reminderId === reminderId);
 
       if (find) {
+        notifService.cancelNotif(find.id);
         const exclude = notifications.filter((notf) => notf.id !== find.id);
         setNotifications(exclude);
       }
@@ -109,22 +110,24 @@ const NotificationProvider: React.FC = ({children}) => {
           (notf) => notf.reminderId === data.reminderId,
         );
         if (findIndex >= 0) {
-          const id = notificationId + 1;
           notifications[findIndex] = {
             title: data.title,
             message: data.message,
             reminderDate: data.reminderDate,
             reminderId: data.reminderId,
-            id,
+            id: find.id,
           };
         }
         const parsedDate = transformDateAndTime(data.reminderDate);
-        const id = notificationId + 1;
-        notifService.scheduleNotif(id, data.title, data.message, parsedDate);
-        setNotificationID(id);
+        notifService.scheduleNotif(
+          find.id,
+          data.title,
+          data.message,
+          parsedDate,
+        );
       }
     },
-    [notifications, notificationId],
+    [notifications],
   );
 
   useEffect(() => {
