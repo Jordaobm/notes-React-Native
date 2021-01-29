@@ -1,4 +1,4 @@
-package com.notes;
+package com.jbmassariolnotes;
 
 import android.app.Application;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.notes;
+package com.jbmassariolnotes;
 
 import com.facebook.react.ReactActivity;
 import org.devio.rn.splashscreen.SplashScreen; 
