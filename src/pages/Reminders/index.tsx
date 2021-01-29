@@ -49,7 +49,7 @@ const Reminders: React.FC = () => {
             ))}
       </ScrollView>
 
-      <Navigation isHome={false} />
+      {/* <Navigation isHome={false} /> */}
 
       <Button name="plus" diretion="NewReminder" color="#00AF5B" />
     </Container>

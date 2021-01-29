@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import React, {useEffect} from 'react';
-import {StatusBar, View} from 'react-native';
-import Routes from './routes';
+import {StatusBar} from 'react-native';
+import StackNavigator from './routes';
 import AppProvider from './hooks';
 import SplashScreen from 'react-native-splash-screen';
 
@@ -13,7 +13,7 @@ const App = () => {
     <>
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
       <AppProvider>
-        <Routes />
+        <StackNavigator />
       </AppProvider>
     </>
   );
