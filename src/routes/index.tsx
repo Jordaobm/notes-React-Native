@@ -32,6 +32,7 @@ const TabNavigator: React.FC = () => {
           textAlign: 'center',
           fontFamily: 'Mulish-Light',
           fontSize: 12,
+          textTransform: 'capitalize',
         },
         indicatorStyle: {
           borderBottomColor: '#fff',

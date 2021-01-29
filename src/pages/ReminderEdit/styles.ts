@@ -64,7 +64,7 @@ export const CancelNote = styled(RectButton)`
 
 export const CardNetNote = styled.View`
   width: 100%;
-  height: 510px;
+  height: 100%;
 `;
 
 export const DateAndTimeSelected = styled.Text`

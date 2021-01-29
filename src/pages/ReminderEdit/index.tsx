@@ -143,58 +143,56 @@ const ReminderEdit: React.FC = () => {
   return (
     <Container>
       <Content>
-        <ScrollView>
-          <CardNetNote>
-            <Line errInput={errInput} />
+        <CardNetNote>
+          <Line errInput={errInput} />
 
-            <Form
-              initialData={{
-                reminderTitle: reminderDetail.reminderTitle,
-                reminderBody: reminderDetail.reminderBody,
-              }}
-              ref={formRef}
-              onSubmit={handleSubmit}>
-              <NoteTitle>
-                <Input
-                  onFocus={() => setErrInput(false)}
-                  inputForm={true}
-                  name="reminderTitle"
-                  placeholder="Um titulo legal"
-                />
-              </NoteTitle>
-              <NoteBody>
-                <Input
-                  onFocus={() => setErrInput(false)}
-                  inputForm={true}
-                  name="reminderBody"
-                  placeholder="Algo para lembrar"
-                  multiline={true}
-                  numberOfLines={10}
-                  style={{flex: 1, textAlignVertical: 'top'}}
-                />
-              </NoteBody>
-              {selectedDate !== '' && selectedTime !== '' && (
-                <DateAndTimeSelected>
-                  {selectedDate} às {selectedTime}
-                </DateAndTimeSelected>
-              )}
-              <NoteActions>
-                <Picker onPress={showModal}>
-                  <Icon name="clock" size={25} color="#fff" />
-                </Picker>
-                <SaveNote
-                  onPress={() => {
-                    formRef.current?.submitForm();
-                  }}>
-                  <Icon name="edit" size={25} color="#fff" />
-                </SaveNote>
-                <CancelNote onPress={() => navigation.navigate('Reminders')}>
-                  <Icon name="x" size={25} color="#fff" />
-                </CancelNote>
-              </NoteActions>
-            </Form>
-          </CardNetNote>
-        </ScrollView>
+          <Form
+            initialData={{
+              reminderTitle: reminderDetail.reminderTitle,
+              reminderBody: reminderDetail.reminderBody,
+            }}
+            ref={formRef}
+            onSubmit={handleSubmit}>
+            <NoteTitle>
+              <Input
+                onFocus={() => setErrInput(false)}
+                inputForm={true}
+                name="reminderTitle"
+                placeholder="Um titulo legal"
+              />
+            </NoteTitle>
+            <NoteBody>
+              <Input
+                onFocus={() => setErrInput(false)}
+                inputForm={true}
+                name="reminderBody"
+                placeholder="Algo para lembrar"
+                multiline={true}
+                numberOfLines={10}
+                style={{flex: 1, textAlignVertical: 'top'}}
+              />
+            </NoteBody>
+            {selectedDate !== '' && selectedTime !== '' && (
+              <DateAndTimeSelected>
+                {selectedDate} às {selectedTime}
+              </DateAndTimeSelected>
+            )}
+            <NoteActions>
+              <Picker onPress={showModal}>
+                <Icon name="clock" size={25} color="#fff" />
+              </Picker>
+              <SaveNote
+                onPress={() => {
+                  formRef.current?.submitForm();
+                }}>
+                <Icon name="edit" size={25} color="#fff" />
+              </SaveNote>
+              <CancelNote onPress={() => navigation.navigate('Reminders')}>
+                <Icon name="x" size={25} color="#fff" />
+              </CancelNote>
+            </NoteActions>
+          </Form>
+        </CardNetNote>
       </Content>
       <Modal
         visible={visible}

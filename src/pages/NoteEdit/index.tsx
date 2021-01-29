@@ -73,47 +73,45 @@ const NoteEdit: React.FC = () => {
   return (
     <Container>
       <Content>
-        <ScrollView>
-          <CardNetNote>
-            <Line errInput={errInput} />
+        <CardNetNote>
+          <Line errInput={errInput} />
 
-            <Form
-              initialData={{title: noteDetail.title, body: noteDetail.body}}
-              ref={formRef}
-              onSubmit={handleSubmit}>
-              <NoteTitle>
-                <Input
-                  onFocus={() => setErrInput(false)}
-                  inputForm={true}
-                  name="title"
-                  placeholder="Um titulo legal"
-                />
-              </NoteTitle>
-              <NoteBody>
-                <Input
-                  onFocus={() => setErrInput(false)}
-                  inputForm={true}
-                  name="body"
-                  placeholder="Algo para lembrar"
-                  multiline={true}
-                  numberOfLines={10}
-                  style={{flex: 1, textAlignVertical: 'top'}}
-                />
-              </NoteBody>
-              <NoteActions>
-                <SaveNote
-                  onPress={() => {
-                    formRef.current?.submitForm();
-                  }}>
-                  <Icon name="edit" size={25} color="#fff" />
-                </SaveNote>
-                <CancelNote onPress={() => navigation.navigate('Home')}>
-                  <Icon name="x" size={25} color="#fff" />
-                </CancelNote>
-              </NoteActions>
-            </Form>
-          </CardNetNote>
-        </ScrollView>
+          <Form
+            initialData={{title: noteDetail.title, body: noteDetail.body}}
+            ref={formRef}
+            onSubmit={handleSubmit}>
+            <NoteTitle>
+              <Input
+                onFocus={() => setErrInput(false)}
+                inputForm={true}
+                name="title"
+                placeholder="Um titulo legal"
+              />
+            </NoteTitle>
+            <NoteBody>
+              <Input
+                onFocus={() => setErrInput(false)}
+                inputForm={true}
+                name="body"
+                placeholder="Algo para lembrar"
+                multiline={true}
+                numberOfLines={10}
+                style={{flex: 1, textAlignVertical: 'top'}}
+              />
+            </NoteBody>
+            <NoteActions>
+              <SaveNote
+                onPress={() => {
+                  formRef.current?.submitForm();
+                }}>
+                <Icon name="edit" size={25} color="#fff" />
+              </SaveNote>
+              <CancelNote onPress={() => navigation.navigate('Home')}>
+                <Icon name="x" size={25} color="#fff" />
+              </CancelNote>
+            </NoteActions>
+          </Form>
+        </CardNetNote>
       </Content>
     </Container>
   );

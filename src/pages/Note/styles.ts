@@ -36,7 +36,6 @@ export const Line = styled.View`
   width: 100%;
   height: 5px;
   background-color: #b468ff;
-
   ${(props) =>
     props.errInput &&
     css`
@@ -64,5 +63,4 @@ export const CancelNote = styled(RectButton)`
 
 export const CardNetNote = styled.View`
   width: 100%;
-  height: 510px;
 `;

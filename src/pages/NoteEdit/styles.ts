@@ -36,7 +36,6 @@ export const Line = styled.View`
   width: 100%;
   height: 5px;
   background-color: #fe8947;
-
   ${(props) =>
     props.errInput &&
     css`
