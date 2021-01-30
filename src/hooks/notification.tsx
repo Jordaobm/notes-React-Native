@@ -148,8 +148,6 @@ const NotificationProvider: React.FC = ({children}) => {
     setnotificationId();
   }, [notificationId]);
 
-  console.log(notifications);
-
   return (
     <NotificationContext.Provider
       value={{createNotification, deleteNotification, edditNotification}}>

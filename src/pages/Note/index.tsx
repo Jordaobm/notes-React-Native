@@ -1,5 +1,4 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {ScrollView} from 'react-native-gesture-handler';
+import React, {useCallback, useRef, useState} from 'react';
 import Input from '../../components/Input';
 import {
   Container,
@@ -13,22 +12,18 @@ import {
   CardNetNote,
 } from './styles';
 import Icon from 'react-native-vector-icons/Feather';
-import {useNavigation} from '@react-navigation/native';
 import {Form} from '@unform/mobile';
 import {FormHandles} from '@unform/core';
 import {useNote} from '../../hooks/note';
-import {format} from 'date-fns';
-import ptBR from 'date-fns/locale/pt-BR';
 import {Alert} from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
 import {INote} from '../../dtos/types';
+import {useNavigation} from '@react-navigation/native';
 
 const Note: React.FC = () => {
+  const formRef = useRef<FormHandles>(null);
   const navigation = useNavigation();
 
-  const formRef = useRef<FormHandles>(null);
-
-  const {setNotes, notes} = useNote();
+  const {addNotes} = useNote();
 
   const [errInput, setErrInput] = useState(false);
 
@@ -39,33 +34,15 @@ const Note: React.FC = () => {
         Alert.alert('Erro', 'Preencha sua nova nota');
         return;
       }
-      const date = new Date();
 
-      const parsedDate = format(date, "EEEE',' d',' LLLL", {locale: ptBR});
-
-      const id = date.valueOf();
-
-      const note: INote = {
-        id,
-        title: data.title,
-        body: data.body,
-        date: parsedDate,
-      };
-
-      setNotes([...notes, note]);
+      addNotes(data);
       navigation.navigate('Home');
+
       formRef.current.clearField('title');
       formRef.current.clearField('body');
     },
-    [notes, setNotes, navigation],
+    [addNotes, navigation],
   );
-
-  useEffect(() => {
-    async function setStorageNote() {
-      await AsyncStorage.setItem('@RememberMe:note', JSON.stringify(notes));
-    }
-    setStorageNote();
-  }, [notes]);
 
   return (
     <Container>

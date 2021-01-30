@@ -14,7 +14,7 @@ interface ButtonProps extends RectButtonProperties {
   diretion?: string;
   position?: number;
   color?: string;
-  deleteNote?: INote;
+  deleteNoteProps?: INote;
   deleteReminder?: IReminder;
 }
 
@@ -23,53 +23,29 @@ const Button: React.FC<ButtonProps> = ({
   diretion,
   position,
   color,
-  deleteNote,
-  deleteReminder,
+  deleteNoteProps,
+  deleteReminderProps,
 }) => {
   const navigation = useNavigation();
   const {deleteNotification} = useNotifications();
-
-  const {notes, setNotes, setNoteDetail} = useNote();
-  const {reminders, setReminders, setReminderDetail} = useReminder();
+  const {deleteNote} = useNote();
+  const {deleteReminder} = useReminder();
 
   const handleDeleteNote = useCallback(
     async (deletingNote: INote) => {
       navigation.navigate('Home');
-      const filter = notes.filter((note) => note.id !== deletingNote.id);
-      setNotes(filter);
-
-      await AsyncStorage.setItem('@RememberMe:note', JSON.stringify(filter));
-      setNoteDetail({
-        body: '',
-        date: '',
-        title: '',
-      });
+      deleteNote(deletingNote);
     },
-    [notes, navigation, setNotes, setNoteDetail],
+    [deleteNote, navigation],
   );
 
   const handleDeleteReminder = useCallback(
     async (deletingReminder: IReminder) => {
       deleteNotification(deletingReminder.reminderId);
       navigation.navigate('Reminders');
-      const filter = reminders.filter(
-        (reminder) => reminder.reminderId !== deletingReminder.reminderId,
-      );
-      setReminders(filter);
-
-      await AsyncStorage.setItem(
-        '@RememberMe:reminders',
-        JSON.stringify(filter),
-      );
-      setReminderDetail({} as IReminder);
+      deleteReminder(deletingReminder);
     },
-    [
-      navigation,
-      reminders,
-      setReminders,
-      setReminderDetail,
-      deleteNotification,
-    ],
+    [navigation, deleteNotification, deleteReminder],
   );
 
   if (diretion) {
@@ -83,23 +59,23 @@ const Button: React.FC<ButtonProps> = ({
     );
   }
 
-  if (deleteNote) {
+  if (deleteNoteProps) {
     return (
       <ButtonContent
         position={position}
         color={color}
-        onPress={() => handleDeleteNote(deleteNote)}>
+        onPress={() => handleDeleteNote(deleteNoteProps)}>
         <ButtonIcon name={name} size={25} color="#fff" />
       </ButtonContent>
     );
   }
 
-  if (deleteReminder) {
+  if (deleteReminderProps) {
     return (
       <ButtonContent
         position={position}
         color={color}
-        onPress={() => handleDeleteReminder(deleteReminder)}>
+        onPress={() => handleDeleteReminder(deleteReminderProps)}>
         <ButtonIcon name={name} size={25} color="#fff" />
       </ButtonContent>
     );

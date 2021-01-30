@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+
 export const Container = styled.View`
   width: 100%;
   height: 100%;
@@ -8,9 +9,24 @@ export const Container = styled.View`
 
 export const ContentNote = styled.View`
   width: 100%;
-
+  height: 100%;
   padding: 50px 20px;
-  /* background-color: green; */
+`;
+
+export const HeaderNote = styled.View`
+  width: 100%;
+`;
+
+export const ContentHeader = styled.View`
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ContentBody = styled.View`
+  width: 100%;
+  padding: 10px 0;
 `;
 
 export const ContentNoteLine = styled.View`
@@ -31,34 +47,27 @@ export const IconContent = styled.View`
   align-items: center;
   justify-content: center;
 `;
-export const NoteInfo = styled.View`
-  /* background-color: red; */
-  flex: 1;
-  padding: 0 10px;
-`;
 
-export const NoteTitle = styled.View`
-  width: 100%;
-  min-height: 60px;
-  justify-content: center;
+export const NoteTitle = styled.Text`
+  padding-left: 10px;
+  flex: 1;
+  font-family: Mulish-Bold;
+  font-size: 30px;
+  line-height: 32px;
 `;
 
 export const NoteTitleText = styled.Text`
   font-family: Mulish-Bold;
   font-size: 30px;
   line-height: 32px;
+  width: 100%;
 `;
 
-export const NoteBody = styled.View``;
-export const NoteBodyText = styled.Text`
-  font-family: Mulish-Regular;
+export const NoteBodyText = styled.View`
+  /* font-family: Mulish-Regular;
   font-size: 18px;
   line-height: 20px;
-  /* or 150% */
-
-  /* Opacity / Black 50% */
-
-  color: rgba(0, 0, 0, 0.5);
+  color: rgba(0, 0, 0, 0.5); */
 `;
 
 export const NoteBodyDate = styled.Text`
@@ -71,3 +80,5 @@ export const NoteBodyDate = styled.Text`
 
   color: #fe8947;
 `;
+
+export const ContentFooter = styled.View``;

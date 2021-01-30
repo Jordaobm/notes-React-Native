@@ -41,6 +41,7 @@ import {useNotifications} from '../../hooks/notification';
 
 const NewReminder: React.FC = () => {
   const {createNotification} = useNotifications();
+
   const [visible, setVisible] = React.useState(false);
 
   const showModal = () => setVisible(true);

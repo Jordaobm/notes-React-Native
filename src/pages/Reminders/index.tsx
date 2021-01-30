@@ -3,7 +3,6 @@ import {ScrollView} from 'react-native-gesture-handler';
 import Button from '../../components/Button';
 import Card from '../../components/CardNote';
 import Input from '../../components/Input';
-import Navigation from '../../components/Navigation';
 import {IReminder} from '../../dtos/types';
 import {useReminder} from '../../hooks/reminder';
 import {Container, SearchContainer, Icone} from './styles';
@@ -48,8 +47,6 @@ const Reminders: React.FC = () => {
               <Card key={reminder.reminderId} reminder={reminder} />
             ))}
       </ScrollView>
-
-      {/* <Navigation isHome={false} /> */}
 
       <Button name="plus" diretion="NewReminder" color="#00AF5B" />
     </Container>

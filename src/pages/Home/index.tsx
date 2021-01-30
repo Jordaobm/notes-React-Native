@@ -3,7 +3,6 @@ import {ScrollView} from 'react-native-gesture-handler';
 import Button from '../../components/Button';
 import Card from '../../components/CardNote';
 import Input from '../../components/Input';
-import Navigation from '../../components/Navigation';
 import {INote} from '../../dtos/types';
 import {useNote} from '../../hooks/note';
 import {Container, Icone, SearchContainer} from './styles';

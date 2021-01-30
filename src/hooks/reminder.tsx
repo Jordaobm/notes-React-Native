@@ -10,6 +10,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 interface ReminderContextData {
   addReminder(reminder: IReminder): void;
+  edditReminder(reminder: IReminder): void;
+  deleteReminder(reminder: IReminder): void;
   reminders: IReminder[];
   setReminders(reminders: IReminder[]): void;
 
@@ -54,11 +56,51 @@ const ReminderProvider: React.FC = ({children}) => {
     [reminders],
   );
 
+  const edditReminder = useCallback(
+    (data: IReminder) => {
+      const findIndex = reminders.findIndex(
+        (find) => find.reminderId === data.reminderId,
+      );
+      const edit: IReminder = {
+        reminderId: data.reminderId,
+        reminderTitle: data.reminderTitle,
+        reminderBody: data.reminderBody,
+        reminderDate: data.reminderDate,
+      };
+      reminders.splice(findIndex, 1);
+      setReminders([...reminders, edit]);
+    },
+    [reminders],
+  );
+
+  const deleteReminder = useCallback(
+    (data: IReminder) => {
+      const filter = reminders.filter(
+        (filter) => filter.reminderId !== data.reminderId,
+      );
+
+      setReminders(filter);
+    },
+    [reminders],
+  );
+
+  useEffect(() => {
+    async function setStorageReminders() {
+      await AsyncStorage.setItem(
+        '@RememberMe:reminders',
+        JSON.stringify(reminders),
+      );
+    }
+    setStorageReminders();
+  }, [reminders]);
+
   return (
     <ReminderContext.Provider
       value={{
         reminders,
         addReminder,
+        edditReminder,
+        deleteReminder,
         reminderDetail,
         setReminderDetail,
         setReminders,
