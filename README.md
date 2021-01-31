@@ -82,7 +82,7 @@ Para adicionar uma data, clique no botão laranja. Ao clicar será aberto um mod
   <img alt="Notes" width="300px" src="https://github.com/Jordaobm/notes-React-Native/blob/main/assets/documentation/05.png" />
 </h1>
 
-Ao cliclar em "Selecione uma data", o DatePicker nativo de seu dispositivo exibirá um calendário para que você selecione a data.
+Ao clicar em "Selecione uma data", o DatePicker nativo de seu dispositivo exibirá um calendário para que você selecione a data.
 
 <h1 align="center">
   <img alt="Notes" width="300px" src="https://github.com/Jordaobm/notes-React-Native/blob/main/assets/documentation/06.png" />
