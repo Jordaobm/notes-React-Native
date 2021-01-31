@@ -14,14 +14,14 @@ export const Content = styled.View`
 `;
 export const NoteActions = styled.View`
   width: 100%;
-  height: 30%;
+  height: 20%;
   flex-direction: row;
   justify-content: space-between;
 `;
 
 export const NoteBody = styled.View`
   width: 100%;
-  height: 50%;
+  height: 60%;
 `;
 export const NoteTitle = styled.View`
   width: 100%;
@@ -64,7 +64,7 @@ export const CancelNote = styled(RectButton)`
 
 export const CardNetNote = styled.View`
   width: 100%;
-  height: 510px;
+  height: 100%;
 `;
 
 export const DateAndTimeSelected = styled.Text`

@@ -16,8 +16,6 @@ export const Content = styled.View`
 
 export const CardNewReminder = styled.View`
   width: 100%;
-  height: 100%;
-  min-height: 600px;
 `;
 
 interface LineProps {
@@ -65,14 +63,15 @@ export const Picker = styled(RectButton)`
 
 export const NoteActions = styled.View`
   width: 100%;
-  height: 30%;
+  height: 20%;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 `;
 
 export const NoteBody = styled.View`
   width: 100%;
-  height: 50%;
+  height: 60%;
 `;
 export const NoteTitle = styled.View`
   width: 100%;

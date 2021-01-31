@@ -41,6 +41,7 @@ import {useNotifications} from '../../hooks/notification';
 
 const NewReminder: React.FC = () => {
   const {createNotification} = useNotifications();
+
   const [visible, setVisible] = React.useState(false);
 
   const showModal = () => setVisible(true);
@@ -115,8 +116,8 @@ const NewReminder: React.FC = () => {
         reminderDate: `${selectedDate} ${selectedTime}`,
       });
       createNotification({
-        message: data.reminderTitle,
-        title: data.reminderBody,
+        message: data.reminderBody,
+        title: data.reminderTitle,
         reminderDate: `${selectedDate} ${selectedTime}`,
         reminderId: id,
       });
@@ -142,7 +143,10 @@ const NewReminder: React.FC = () => {
       <Content>
         <CardNewReminder>
           <Line setErrInput={errInput} />
-          <Form ref={formRef} onSubmit={handleSubmitReminder}>
+          <Form
+            style={{width: '100%'}}
+            ref={formRef}
+            onSubmit={handleSubmitReminder}>
             <NoteTitle>
               <Input
                 onFocus={() => setErrInput(false)}

@@ -1,16 +1,14 @@
 import React, {useCallback, useState} from 'react';
-import {RectButton, ScrollView} from 'react-native-gesture-handler';
+import {StatusBar} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 import Button from '../../components/Button';
 import Card from '../../components/CardNote';
 import Input from '../../components/Input';
-import Navigation from '../../components/Navigation';
 import {INote} from '../../dtos/types';
 import {useNote} from '../../hooks/note';
-import NotifService from '../../services/NotifService';
 import {Container, Icone, SearchContainer} from './styles';
 
 const Home: React.FC = () => {
-  const notif = new NotifService();
   const {notes} = useNote();
 
   const [search, setSearch] = useState<INote[]>([]);
@@ -27,38 +25,35 @@ const Home: React.FC = () => {
     [notes],
   );
   return (
-    <Container>
-      <SearchContainer>
-        <Icone name="search" size={25} />
-        <Input
-          inputForm={false}
-          name="search"
-          placeholder="Search notes"
-          onChangeText={(e) => handleSearchNotes(e)}
-        />
-      </SearchContainer>
+    <>
+      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
 
-      <ScrollView>
-        {search.length > 0
-          ? search.map((note) => {
-              return <Card key={notes.indexOf(note)} note={note} />;
-            })
-          : notes.map((note) => {
-              return <Card key={notes.indexOf(note)} note={note} />;
-            })}
-      </ScrollView>
+      <Container>
+        <SearchContainer>
+          <Icone name="search" size={25} />
+          <Input
+            inputForm={false}
+            name="search"
+            placeholder="Search notes"
+            onChangeText={(e) => handleSearchNotes(e)}
+          />
+        </SearchContainer>
 
-      {/* <RectButton
-        style={{width: 50, height: 50, backgroundColor: 'blue'}}
-        onPress={() => {
-          notif.localNotif();
-        }}
-      /> */}
+        <ScrollView>
+          {search.length > 0
+            ? search.map((note) => {
+                return <Card key={notes.indexOf(note)} note={note} />;
+              })
+            : notes.map((note) => {
+                return <Card key={notes.indexOf(note)} note={note} />;
+              })}
+        </ScrollView>
 
-      <Navigation isHome={true} />
+        {/* <Navigation isHome={true} /> */}
 
-      <Button name="plus" diretion="Note" />
-    </Container>
+        <Button name="plus" diretion="Note" />
+      </Container>
+    </>
   );
 };
 

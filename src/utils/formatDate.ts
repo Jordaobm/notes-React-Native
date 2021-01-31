@@ -26,6 +26,26 @@ export function formatDate(date: string): boolean {
 }
 
 export function formatDateForNotifications(date: Date): string {
-  const formt = format(date, "d 'de' MMMM 'de' Y H':'m", {locale: ptBR});
+  const formt = format(date, "d 'de' MMMM 'de' Y HH':'mm", {locale: ptBR});
   return formt;
+}
+
+export function dateExpiredReminders(date: string, actualDate: Date) {
+  const stringDate = date.split(' ');
+
+  const remindDate = stringDate[0].split('/');
+  const day = remindDate[0];
+  const month = remindDate[1];
+  const year = remindDate[2];
+
+  const remindTime = stringDate[1].split(':');
+  const hours = `${Number(remindTime[0]) + 3}`;
+  const minutes = remindTime[1];
+
+  const parsedDate = new Date(`${year}-${month}-${day}T${hours}:${minutes}:00`);
+
+  if (parsedDate > actualDate) {
+    return true;
+  }
+  return false;
 }

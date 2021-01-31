@@ -1,9 +1,8 @@
 import {useNavigation} from '@react-navigation/native';
 import {FormHandles} from '@unform/core';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {View, Text, Alert} from 'react-native';
+import React, {useCallback, useRef, useState} from 'react';
+import {Alert} from 'react-native';
 import {IReminder} from '../../dtos/types';
-import AsyncStorage from '@react-native-community/async-storage';
 import {Form} from '@unform/mobile';
 import {Modal} from 'react-native-paper';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -30,12 +29,13 @@ import {
   SaveDateTimeModal,
   DateAndTimeSelected,
 } from './styles';
-import {ScrollView} from 'react-native-gesture-handler';
 import Input from '../../components/Input';
 import {format} from 'date-fns';
 import {useNotifications} from '../../hooks/notification';
 
 const ReminderEdit: React.FC = () => {
+  const {edditReminder} = useReminder();
+
   const [visible, setVisible] = React.useState(false);
 
   const {edditNotification} = useNotifications();
@@ -48,7 +48,7 @@ const ReminderEdit: React.FC = () => {
 
   const formRef = useRef<FormHandles>(null);
 
-  const {reminders, setReminders, reminderDetail} = useReminder();
+  const {reminderDetail} = useReminder();
 
   const [errInput, setErrInput] = useState(false);
 
@@ -59,6 +59,7 @@ const ReminderEdit: React.FC = () => {
   const [showDatePickerTime, setShowDatePickerTime] = useState(false);
 
   const remindDate = reminderDetail.reminderDate.split(' ')[0];
+
   const remindTime = reminderDetail.reminderDate.split(' ')[1];
 
   const [selectedDate, setSelectedDate] = useState(remindDate);
@@ -90,16 +91,6 @@ const ReminderEdit: React.FC = () => {
     }
   }, []);
 
-  useEffect(() => {
-    async function setStorageReminders() {
-      await AsyncStorage.setItem(
-        '@RememberMe:reminders',
-        JSON.stringify(reminders),
-      );
-    }
-    setStorageReminders();
-  }, [reminders]);
-
   const handleSubmit = useCallback(
     async (data: IReminder) => {
       if (data.reminderTitle === '' || data.reminderBody === '') {
@@ -108,19 +99,12 @@ const ReminderEdit: React.FC = () => {
         return;
       }
 
-      const findReminder = reminders.findIndex(
-        (reminder) => reminder.reminderId === reminderDetail.reminderId,
-      );
-
-      const editReminder: IReminder = {
+      edditReminder({
         reminderId: reminderDetail.reminderId,
         reminderTitle: data.reminderTitle,
         reminderBody: data.reminderBody,
         reminderDate: `${selectedDate} ${selectedTime}`,
-      };
-
-      reminders.splice(findReminder, 1);
-      setReminders([...reminders, editReminder]);
+      });
       navigation.navigate('Reminders');
       edditNotification({
         title: data.reminderTitle,
@@ -130,71 +114,69 @@ const ReminderEdit: React.FC = () => {
       });
     },
     [
+      edditNotification,
+      edditReminder,
       navigation,
-      reminderDetail,
-      reminders,
-      setReminders,
+      reminderDetail.reminderId,
       selectedDate,
       selectedTime,
-      edditNotification,
     ],
   );
 
   return (
     <Container>
       <Content>
-        <ScrollView>
-          <CardNetNote>
-            <Line errInput={errInput} />
+        <CardNetNote>
+          <Line errInput={errInput} />
 
-            <Form
-              initialData={{
-                reminderTitle: reminderDetail.reminderTitle,
-                reminderBody: reminderDetail.reminderBody,
-              }}
-              ref={formRef}
-              onSubmit={handleSubmit}>
-              <NoteTitle>
-                <Input
-                  onFocus={() => setErrInput(false)}
-                  inputForm={true}
-                  name="reminderTitle"
-                  placeholder="Um titulo legal"
-                />
-              </NoteTitle>
-              <NoteBody>
-                <Input
-                  onFocus={() => setErrInput(false)}
-                  inputForm={true}
-                  name="reminderBody"
-                  placeholder="Algo para lembrar"
-                  multiline={true}
-                  numberOfLines={10}
-                  style={{flex: 1, textAlignVertical: 'top'}}
-                />
-              </NoteBody>
-              {selectedDate !== '' && selectedTime !== '' && (
-                <DateAndTimeSelected>
-                  {selectedDate} às {selectedTime}
-                </DateAndTimeSelected>
-              )}
-              <NoteActions>
-                <Picker onPress={showModal}>
-                  <Icon name="clock" size={25} color="#fff" />
-                </Picker>
-                <SaveNote
-                  onPress={() => {
-                    formRef.current?.submitForm();
-                  }}>
-                  <Icon name="edit" size={25} color="#fff" />
-                </SaveNote>
-                <CancelNote onPress={() => navigation.navigate('Reminders')}>
-                  <Icon name="x" size={25} color="#fff" />
-                </CancelNote>
-              </NoteActions>
-            </Form>
-          </CardNetNote>
-        </ScrollView>
+          <Form
+            style={{width: '100%'}}
+            initialData={{
+              reminderTitle: reminderDetail.reminderTitle,
+              reminderBody: reminderDetail.reminderBody,
+            }}
+            ref={formRef}
+            onSubmit={handleSubmit}>
+            <NoteTitle>
+              <Input
+                onFocus={() => setErrInput(false)}
+                inputForm={true}
+                name="reminderTitle"
+                placeholder="Um titulo legal"
+              />
+            </NoteTitle>
+            <NoteBody>
+              <Input
+                onFocus={() => setErrInput(false)}
+                inputForm={true}
+                name="reminderBody"
+                placeholder="Algo para lembrar"
+                multiline={true}
+                numberOfLines={10}
+                style={{flex: 1, textAlignVertical: 'top'}}
+              />
+            </NoteBody>
+            {selectedDate !== '' && selectedTime !== '' && (
+              <DateAndTimeSelected>
+                {selectedDate} às {selectedTime}
+              </DateAndTimeSelected>
+            )}
+            <NoteActions>
+              <Picker onPress={showModal}>
+                <Icon name="clock" size={25} color="#fff" />
+              </Picker>
+              <SaveNote
+                onPress={() => {
+                  formRef.current?.submitForm();
+                }}>
+                <Icon name="edit" size={25} color="#fff" />
+              </SaveNote>
+              <CancelNote onPress={() => navigation.navigate('Reminders')}>
+                <Icon name="x" size={25} color="#fff" />
+              </CancelNote>
+            </NoteActions>
+          </Form>
+        </CardNetNote>
       </Content>
       <Modal
         visible={visible}

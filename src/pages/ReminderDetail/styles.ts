@@ -9,7 +9,7 @@ export const Container = styled.View`
 
 export const ContentNote = styled.View`
   width: 100%;
-
+  height: 100%;
   padding: 50px 20px;
   /* background-color: green; */
 `;
@@ -84,7 +84,11 @@ export const NoteBodyText = styled.Text`
   color: rgba(0, 0, 0, 0.5);
 `;
 
-export const NoteBodyDate = styled.Text`
+interface NoteBodyDateProps {
+  isAfter: boolean;
+}
+
+export const NoteBodyDate = styled.Text<NoteBodyDateProps>`
   font-family: Mulish-ExtraLight;
   font-size: 15px;
   line-height: 24px;
@@ -93,4 +97,33 @@ export const NoteBodyDate = styled.Text`
   /* Opacity / Black 50% */
 
   color: #fe8947;
+
+  ${(props) =>
+    props.isAfter
+      ? css`
+          color: #00af5b;
+        `
+      : css`
+          color: #f65555;
+        `}
 `;
+
+export const ReminderTitle = styled.Text`
+  flex: 1;
+  padding-left: 10px;
+  font-family: Mulish-Bold;
+  font-size: 30px;
+  line-height: 32px;
+`;
+export const Header = styled.View`
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+`;
+
+export const ContentBody = styled.View`
+  width: 100%;
+  padding: 10px 0;
+`;
+
+export const ContentFooter = styled.View``;

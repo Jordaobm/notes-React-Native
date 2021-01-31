@@ -1,12 +1,13 @@
 import {View} from 'react-native';
-import {RectButton} from 'react-native-gesture-handler';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import styled, {css} from 'styled-components/native';
 
-export const Container = styled(RectButton)`
+export const ContainerButtonCard = styled(TouchableOpacity)`
   width: 100%;
   padding: 10px;
   margin: 10px 0;
   flex-direction: row;
+  /* background-color: red; */
 `;
 
 interface LineProps {

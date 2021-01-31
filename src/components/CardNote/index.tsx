@@ -9,7 +9,7 @@ import {
   CardDate,
   CardInfo,
   CardTitleNote,
-  Container,
+  ContainerButtonCard,
   DateExtens,
   Line,
   Title,
@@ -34,7 +34,7 @@ const Card: React.FC<CardProps> = ({note, reminder}) => {
     );
 
     return (
-      <Container
+      <ContainerButtonCard
         onPress={() => {
           handleEditNote(note);
         }}>
@@ -47,7 +47,7 @@ const Card: React.FC<CardProps> = ({note, reminder}) => {
             <DateExtens>{note.date}</DateExtens>
           </CardDate>
         </CardInfo>
-      </Container>
+      </ContainerButtonCard>
     );
   }
 
@@ -61,7 +61,7 @@ const Card: React.FC<CardProps> = ({note, reminder}) => {
     );
 
     return (
-      <Container onPress={() => handleReminderDetail(reminder)}>
+      <ContainerButtonCard onPress={() => handleReminderDetail(reminder)}>
         <Line
           reminder={!!reminder}
           isAfter={formatDate(reminder.reminderDate)}
@@ -74,7 +74,7 @@ const Card: React.FC<CardProps> = ({note, reminder}) => {
             <DateExtens>{reminder.reminderDate}</DateExtens>
           </CardDate>
         </CardInfo>
-      </Container>
+      </ContainerButtonCard>
     );
   }
 
