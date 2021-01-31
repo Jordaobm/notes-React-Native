@@ -26,6 +26,7 @@ export const NoteActions = styled.View`
   height: 20%;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 `;
 
 interface LineProps {
@@ -63,5 +64,5 @@ export const CancelNote = styled(RectButton)`
 
 export const CardNetNote = styled.View`
   width: 100%;
-  height: 510px;
+  height: 100%;
 `;

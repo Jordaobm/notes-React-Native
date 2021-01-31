@@ -11,6 +11,60 @@ import ReminderEdit from '../pages/ReminderEdit';
 import Icon from 'react-native-vector-icons/Feather';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import {Tutorial, Tutorial2, Tutorial3} from '../pages/Tutorial';
+
+const TabNavigatorTutorial: React.FC = () => {
+  const TabTutorial = createMaterialTopTabNavigator();
+  return (
+    <TabTutorial.Navigator
+      initialRouteName="Tutorial"
+      backBehavior="order"
+      tabBarPosition="bottom"
+      tabBarOptions={{
+        activeTintColor: '#b468ff',
+        inactiveTintColor: '#000',
+        showIcon: true,
+        activeTintColor: '#b468ff',
+        inactiveTintColor: '#000',
+        style: {
+          backgroundColor: '#fff',
+        },
+        labelStyle: {
+          textAlign: 'center',
+          fontFamily: 'Mulish-Regular',
+          fontSize: 12,
+          textTransform: 'capitalize',
+        },
+        indicatorStyle: {
+          borderBottomColor: '#b468ff',
+          borderBottomWidth: 2,
+          borderTopWidth: 0,
+        },
+      }}>
+      <TabTutorial.Screen
+        name="Tutorial"
+        component={Tutorial}
+        options={{
+          tabBarLabel: 'Notas',
+        }}
+      />
+      <TabTutorial.Screen
+        name="Tutorial2"
+        component={Tutorial2}
+        options={{
+          tabBarLabel: 'Lembretes',
+        }}
+      />
+      <TabTutorial.Screen
+        name="Tutorial3"
+        component={Tutorial3}
+        options={{
+          tabBarLabel: 'Markdown',
+        }}
+      />
+    </TabTutorial.Navigator>
+  );
+};
 
 const TabNavigator: React.FC = () => {
   const Tab = createMaterialTopTabNavigator();
@@ -75,7 +129,14 @@ const StackNavigator: React.FC = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Navigator
+        screenOptions={{headerShown: false}}
+        initialRouteName="TabNavigatorTutorial"
+        mode="modal">
+        <Stack.Screen
+          name="TabNavigatorTutorial"
+          component={TabNavigatorTutorial}
+        />
         <Stack.Screen name="TabNavigator" component={TabNavigator} />
         <Stack.Screen name="Note" component={Note} />
         <Stack.Screen name="NoteDetail" component={NoteDetail} />

@@ -26,7 +26,7 @@ export function formatDate(date: string): boolean {
 }
 
 export function formatDateForNotifications(date: Date): string {
-  const formt = format(date, "d 'de' MMMM 'de' Y H':'m", {locale: ptBR});
+  const formt = format(date, "d 'de' MMMM 'de' Y HH':'mm", {locale: ptBR});
   return formt;
 }
 

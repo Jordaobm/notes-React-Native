@@ -50,7 +50,7 @@ const Note: React.FC = () => {
         <CardNetNote>
           <Line errInput={errInput} />
 
-          <Form ref={formRef} onSubmit={handleSubmit}>
+          <Form style={{width: '100%'}} ref={formRef} onSubmit={handleSubmit}>
             <NoteTitle>
               <Input
                 onFocus={() => setErrInput(false)}

@@ -130,6 +130,7 @@ const ReminderEdit: React.FC = () => {
           <Line errInput={errInput} />
 
           <Form
+            style={{width: '100%'}}
             initialData={{
               reminderTitle: reminderDetail.reminderTitle,
               reminderBody: reminderDetail.reminderBody,

@@ -26,6 +26,7 @@ export const NoteActions = styled.View`
   height: 20%;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 `;
 
 interface LineProps {

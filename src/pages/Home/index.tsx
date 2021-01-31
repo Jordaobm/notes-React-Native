@@ -1,4 +1,5 @@
 import React, {useCallback, useState} from 'react';
+import {StatusBar} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import Button from '../../components/Button';
 import Card from '../../components/CardNote';
@@ -24,31 +25,35 @@ const Home: React.FC = () => {
     [notes],
   );
   return (
-    <Container>
-      <SearchContainer>
-        <Icone name="search" size={25} />
-        <Input
-          inputForm={false}
-          name="search"
-          placeholder="Search notes"
-          onChangeText={(e) => handleSearchNotes(e)}
-        />
-      </SearchContainer>
+    <>
+      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
 
-      <ScrollView>
-        {search.length > 0
-          ? search.map((note) => {
-              return <Card key={notes.indexOf(note)} note={note} />;
-            })
-          : notes.map((note) => {
-              return <Card key={notes.indexOf(note)} note={note} />;
-            })}
-      </ScrollView>
+      <Container>
+        <SearchContainer>
+          <Icone name="search" size={25} />
+          <Input
+            inputForm={false}
+            name="search"
+            placeholder="Search notes"
+            onChangeText={(e) => handleSearchNotes(e)}
+          />
+        </SearchContainer>
 
-      {/* <Navigation isHome={true} /> */}
+        <ScrollView>
+          {search.length > 0
+            ? search.map((note) => {
+                return <Card key={notes.indexOf(note)} note={note} />;
+              })
+            : notes.map((note) => {
+                return <Card key={notes.indexOf(note)} note={note} />;
+              })}
+        </ScrollView>
 
-      <Button name="plus" diretion="Note" />
-    </Container>
+        {/* <Navigation isHome={true} /> */}
+
+        <Button name="plus" diretion="Note" />
+      </Container>
+    </>
   );
 };
 
