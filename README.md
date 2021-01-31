@@ -2,9 +2,13 @@
   <img alt="icone" title="Notes" src="https://github.com/Jordaobm/notes-React-Native/blob/main/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" />
 </h1>
 
-# Projeto Notes - React Native
+# Notes - React Native
 
-Notes é uma app desenvolvido para Android usando React-Native com o intuito de aperfeiçoar minhas habilidades em React-Native e em algumas libs. Nessa aplicação uso conceitos de componentização, gerenciamento de estados com a ContextAPI do React e seus ReactHooks.
+Notes é uma app desenvolvido para Android usando React-Native com o intuito de aperfeiçoar minhas habilidades em React e em algumas libs. Nessa aplicação uso conceitos de componentização, gerenciamento de estados com a ContextAPI do React e seus ReactHooks para criar, editar e deletar notas e lembretes, de forma simples e rápida.
+
+## 💡Ideia
+
+O foco da aplicação e manter um visual simples e agradável ao usuário, onde ele interage com as funcionalidades de forma direta e fácil. Em Notes você pode criar, armazenar, editar e excluir notas e lembretes! Os lembretes em especial terão notificações inclusas. Quando a hora definida no lembrete chegar, a notifcação soará alertando o usuário.
 
 ## Ferramentas e bibliotecas utilizadas no projeto:
 
@@ -17,16 +21,12 @@ Notes é uma app desenvolvido para Android usando React-Native com o intuito de 
 - react-native-vector-icons (icones auto-explicativos)
 - react-native-paper (Modais)
 - react-native-push-notification (Notificações locais para lembretes)
+- react-native-markdown-display (Formato markdown para marcação de textos no corpo de notas e lembretes)
 - Styled-Components (ferramenta para uso do css em forma de componentes React)
 
 ### Demais ferramentas e sites que auxiliaram na construção da UI
 
 - Figma(UI design)
-- VectorIcons
-
-# 💡Ideia
-
-Criar, armazenar, editar e excluir notas e lembretes! Os lembretes em especial terão notificações inclusas. Quando a hora defina no lembrete chegar, a notifcação soará alertando o usuário.
 
 ## Requisitos Funcionais:
 
@@ -38,6 +38,7 @@ Criar, armazenar, editar e excluir notas e lembretes! Os lembretes em especial t
 - [x]  Poder colocar datas nos lembretes
 - [x]  Poder editar os lembretes criados
 - [x]  Poder deletar os lembretes
+- [x]  Usar Markdown para formatar o texto dentro do corpo das notas e lembretes
 
 ## Requisitos Não Funcionais
 
@@ -49,16 +50,16 @@ Criar, armazenar, editar e excluir notas e lembretes! Os lembretes em especial t
 
 ## Criando uma nota
 
-Na primeira página da aplicação encontram-se as notas. Para adicionar uma nova nota basta clicar no botão roxo no canto direito do rodapé da página.
+Na primeira página da aplicação encontram-se as notas. 
 
 <h1 align="center">
-  <img alt="Notes" width="300px" src="https://github.com/Jordaobm/notes-React-Native/blob/main/assets/documentation/Notes.jpg" />
+  <img alt="Notes" width="300px" src="https://github.com/Jordaobm/notes-React-Native/blob/main/assets/documentation/01.png" />
 </h1>
 
 Você será direcionado para a página de criação de novas notas, onde poderá adicionar um título e um corpo à sua nota. Nestes campos são válidos todos os tipos de caracteres nativos do seu smarthphone.
 
 <h1 align="center">
-  <img alt="Notes" width="300px" src="https://github.com/Jordaobm/notes-React-Native/blob/main/assets/documentation/NewNotes.jpg" />
+  <img alt="Notes" width="300px" src="https://github.com/Jordaobm/notes-React-Native/blob/main/assets/documentation/02.png" />
 </h1>
 
 ## Criando um lembrete
@@ -66,47 +67,51 @@ Você será direcionado para a página de criação de novas notas, onde poderá
 Para criar um lembrete basta acessar a página de reminders pelos botões de navegação no rodapé da página, e você será direcionado para uma página idêntica à de notas, no entanto agora você está na sessão de lembretes. Para adicionar um novo lembrete basta clicar no botão verde no canto direito do rodapé da página.
 
 <h1 align="center">
-  <img alt="Reminders" width="300px" src="https://github.com/Jordaobm/notes-React-Native/blob/main/assets/documentation/Reminders.jpg" />
+  <img alt="Notes" width="300px" src="https://github.com/Jordaobm/notes-React-Native/blob/main/assets/documentation/03.png" />
 </h1>
 
 Você será direcionado para a página de criação de novos lembretes, onde poderá adicionar um título, corpo e data para ser lembrado. Nestes campos são válidos todos os tipos de caracteres nativos do seu smarthphone. Ao finalizar a criação de seu lembrete, tenha em mente que a data para ser lembrado é obrigatória, e que não poderá criar um lembrete sem especificar uma data. 
 
 <h1 align="center">
-  <img alt="newreminder" width="300px" src="https://github.com/Jordaobm/notes-React-Native/blob/main/assets/documentation/NewReminder.jpg" />
+  <img alt="Notes" width="300px" src="https://github.com/Jordaobm/notes-React-Native/blob/main/assets/documentation/04.png" />
 </h1>
 
 Para adicionar uma data, clique no botão laranja. Ao clicar será aberto um modal conforme abaixo. Neste modal você poderá selecionar a data e a hora em que pretende ser lembrado.
 
 <h1 align="center">
-  <img alt="modal" width="300px" src="https://github.com/Jordaobm/notes-React-Native/blob/main/assets/documentation/modal.jpg" />
+  <img alt="Notes" width="300px" src="https://github.com/Jordaobm/notes-React-Native/blob/main/assets/documentation/05.png" />
 </h1>
 
 Ao cliclar em "Selecione uma data", o DatePicker nativo de seu dispositivo exibirá um calendário para que você selecione a data.
 
 <h1 align="center">
-  <img alt="datepickerdate" width="300px" src="https://github.com/Jordaobm/notes-React-Native/blob/main/assets/documentation/datepickerdate.jpg" />
+  <img alt="Notes" width="300px" src="https://github.com/Jordaobm/notes-React-Native/blob/main/assets/documentation/06.png" />
 </h1>
 
 Após a seleção da data, selecione a hora em que pretende ser lembrado clicando em "Selecione a hora". **É muito importante que você selecione a data e a hora, pois caso algum desdes não seja selecionado não será possível a criação do lembrete.**
 
 <h1 align="center">
-  <img alt="datepickertime" width="300px" src="https://github.com/Jordaobm/notes-React-Native/blob/main/assets/documentation/datepickertime.jpg" />
+  <img alt="Notes" width="300px" src="https://github.com/Jordaobm/notes-React-Native/blob/main/assets/documentation/07.png" />
 </h1>
 
 Após as seleções feitas, o modal informará em coloração verde a data selecionada. Caso corresponda com suas necessidades, você poderá clicar no botão verde "Salvar".
 
 <h1 align="center">
-  <img alt="modal-data-preenchida" width="300px" src="https://github.com/Jordaobm/notes-React-Native/blob/main/assets/documentation/modal-data-preenchida.jpg" />
+  <img alt="Notes" width="300px" src="https://github.com/Jordaobm/notes-React-Native/blob/main/assets/documentation/08.png" />
 </h1>
 
-E então o modal será fechado e você retornará à página de criação de seu lembrete, agora sinalizado em verde à data em que você será lembrado. Para finalizar basta clicar no botão verde "Salvar" e então seu lembrete será agendado para a data selecionada. Lembretes "expirados" ficarão em vermelho na página de lembretes, enquanto os lembretes que ainda não expiraram permanecerão em verde
+E então o modal será fechado e você retornará à página de criação de seu lembrete, agora sinalizado em verde à data em que você será lembrado. Para finalizar basta clicar no botão verde "Salvar" e então seu lembrete será agendado para a data selecionada. Lembretes "expirados" ficarão em vermelho na página de lembretes e seus detalhes, enquanto os lembretes que ainda não expiraram permanecerão em verde.
 
 <h1 align="center">
-  <img alt="datapreenchida" width="300px" src="https://github.com/Jordaobm/notes-React-Native/blob/main/assets/documentation/datapreenchida.jpg" />
+  <img alt="Notes" width="300px" src="https://github.com/Jordaobm/notes-React-Native/blob/main/assets/documentation/11.png" />
+</h1>
+
+<h1 align="center">
+  <img alt="Notes" width="300px" src="https://github.com/Jordaobm/notes-React-Native/blob/main/assets/documentation/12.png" />
 </h1>
 
 Por fim, quando chegar o momento, seu lembrete soará uma notificação em seu dispositivo, alertando-o. 
 
 <h1 align="center">
-  <img alt="notificacao" src="https://github.com/Jordaobm/notes-React-Native/blob/main/assets/documentation/Notifica%C3%A7%C3%A3o.jpg" />
+  <img alt="Notes" width="300px" src="https://github.com/Jordaobm/notes-React-Native/blob/main/assets/documentation/10.png" />
 </h1>
