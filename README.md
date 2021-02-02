@@ -8,7 +8,7 @@ Notes é uma app desenvolvido para Android usando React-Native com o intuito de 
 
 ## 💡Ideia
 
-O foco da aplicação e manter um visual simples e agradável ao usuário, onde ele interage com as funcionalidades de forma direta e fácil. Em Notes você pode criar, armazenar, editar e excluir notas e lembretes! Os lembretes em especial terão notificações inclusas. Quando a hora definida no lembrete chegar, a notifcação soará alertando o usuário.
+O foco da aplicação e manter um visual simples e agradável ao usuário, onde ele interage com as funcionalidades de forma direta e fácil. Em Notes você pode criar, armazenar, editar e excluir notas e lembretes! Os lembretes em especial terão notificações inclusas. Quando a hora definida no lembrete chegar, a notificação  soará alertando o usuário.
 
 ## Ferramentas e bibliotecas utilizadas no projeto:
 
